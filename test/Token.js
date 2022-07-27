@@ -13,22 +13,15 @@ describe("Token Contract", function () {
 
   describe('Deployment', function () {
 
-    // it("The address is valid", async function () {
-    //   assert.notEqual(owner, null);
-    //   assert.notEqual(owner, undefined);
-    //   assert.notEqual(owner, 0x0);
-    //   assert.notEqual(owner, "");
-    // });
-
     it("Should set the right owner", async function (){
-      const { hardhatToken, owner } = await loadFixture(deployTokenFixture); 
+      const { hardhatToken, owner } = await loadFixture(deployTokenFixture); // require the some variables, no all of them, of the function delployTokenFixture 
       expect(await hardhatToken.owner()).to.equal(owner.address); // The same that deploy the contract should be the same that is been tested
     });
 
     it("Should assign the total supply of tokens to the owner", async function (){
       const { hardhatToken, owner } = await loadFixture(deployTokenFixture); 
-      const ownerBalance = await hardhatToken.balanceOf(owner.address);
-      expect(await hardhatToken.balanceOf(owner.address)).to.equal(ownerBalance);
+      const totalSupply = await hardhatToken.totalSupply();
+      expect(await hardhatToken.balanceOf(owner.address)).to.equal(totalSupply);
     });
   });
 
@@ -37,7 +30,7 @@ describe("Token Contract", function () {
   describe('Transactions', function() {
 
     it("Should transfer between accounts", async function() {
-      const { hardhatToken, owner, addr1, addr2 } = await loadFixture(deployTokenFixture);
+      const { hardhatToken, addr1, addr2 } = await loadFixture(deployTokenFixture);
       
       await hardhatToken.transfer(addr1.address, 50);
       expect(await hardhatToken.balanceOf(addr1.address)).to.equal(50);

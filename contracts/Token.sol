@@ -4,6 +4,8 @@
 // It will be used by the Solidity compiler to validate its version.
 pragma solidity ^0.8.9;
 
+import 'hardhat/console.sol';
+
 contract Token {
 
     // Basic elements
@@ -37,7 +39,14 @@ contract Token {
         //like a conditional, we require that the balances of the deployer should be more or equal than the amount of the tokens he wanna transfer
         require(balances[msg.sender] >= amount, "Not enough funds to transfer");
 
-            // The transfer, here we see that the balances of the owner reduce because he wants to transfer the token
+        console.log(
+            "transfering from %s to %s %s tokens",
+            msg.sender,
+            to,
+            amount
+        );
+
+        // The transfer, here we see that the balances of the owner reduce because he wants to transfer the token
         balances[owner] -= amount;
         balances[to] += amount; 
 
